@@ -1,7 +1,6 @@
 import os
 import sys
-sys.path.append('../src')
-
+import pdb
 from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
@@ -24,8 +23,9 @@ class DataIngestion:
         try:
             data = pd.read_csv('notebook\data\student-por.csv')
             logging.info('Read the dataset as dataframe')
+            #pdb.set_trace()
 
-            os.makedirs(os.path.dirname, (self.ingestion_config.train_data_path), exist_ok=True)
+            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
             data.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
             
             logging.info('Train test initiated')
@@ -43,6 +43,3 @@ class DataIngestion:
             raise CustomException(e, sys)
         
 
-if __name__ == '__main__':
-    obj = DataIngestion()
-    obj.initiate_data_ingestion()
